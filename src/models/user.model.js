@@ -1,7 +1,6 @@
 import mongoose,{Schema} from "mongoose";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt.js";
-import { use } from "react";
+import bcrypt from "bcrypt"; 
 
 const userSchema= new Schema({
 username:{
@@ -19,7 +18,7 @@ lowercase:true,
 trim:true
 
 },
-fullname:{
+fullName:{
     type:String,
     required:true,
     trim:true,
@@ -27,21 +26,22 @@ fullname:{
 },
 avatar:{
     type:String,
-    reuired:true
+    required:true
 },
 coverimage:{
     type:String
 },
 watchhistory:[{
-    type:schema.types.ObjectId,
+    type:Schema.Types.ObjectId,
     ref:"video"
 }],
+
 password:{
     type:String,
     required:[true,"password is required"] 
 },
 refreshTokens:{
-    type:"string"
+    type:String
 }
 
 },{timestamps:true}
@@ -56,7 +56,7 @@ userSchema.pre("save",async function(next){
 userSchema.methods.isPasswordcorrect= async function (password) {
     return await bcrypt.compare(password,this.password)
 }
-userSchema.methods.genarateAccessToken=function(){
+userSchema.methods.generateAccessToken=function(){
 return jwt.sign({
     _id:this._id,
     email:this.email,
@@ -64,20 +64,20 @@ return jwt.sign({
     fullname:this.fullname
 
 },
-process.env.ACCESS_TOKEN_SECRET,
+"uygferyf",
 {
-    expiresIn:process.env.ACCESS_TOKEN_EXPIRY
+    expiresIn:"1d"
 })
 }
-userSchema.methods.genarateRefreshToken=function(){
+userSchema.methods.genderateRefreshToken=function(){
 return jwt.sign({
     _id:this._id,
     
 
 },
-process.env.REFRESH_TOKEN_SECRET,
+"uhyyvbuy",
 {
-    expiresIn:process.env.REFRESH_TOKEN_EXPIRY
+    expiresIn:"1d"
 })
 }
 
