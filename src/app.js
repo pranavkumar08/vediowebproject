@@ -15,4 +15,12 @@ import  userRouter  from './routes/user.routes.js';
 //rotes declaration
 
 app.use("/api/v1/users",userRouter);
+app.get("/api/v1/health", (req, res) => {
+  res.status(200).json({
+    status: "UP",
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+  });
+});
+
 export {app};
